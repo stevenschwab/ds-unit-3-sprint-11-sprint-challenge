@@ -9,6 +9,8 @@ flask-sqlalchemy = "*"
 requests = "*"
 jinja2 = "*"
 python-dotenv = "*"
+scikit-learn = "*"
+pandas = "*"
 
 [dev-packages]
 
