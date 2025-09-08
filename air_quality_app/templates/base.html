@@ -15,12 +15,19 @@
         <a class="navbar-brand mb-0 h1" id="title" href="/">Air Quality</a>
     </nav>
     <div class="container">
-        <form action="/" method="post">
-            <div class="form-group d-inline-flex">
-                <input type="text" name="location_name" placeholder="Location Name" class="form-control">
-                <button type="submit" class="btn btn-success ml-2" id="submit-btn">Get Data</button>
-            </div>
-        </form>
+        <div class="buttons">
+            <form action="/" method="post">
+                <div class="form-group d-inline-flex">
+                    <input type="text" name="location_name" placeholder="Location Name" class="form-control">
+                    <button type="submit" class="btn btn-success ml-2" id="submit-btn">Get Data</button>
+                </div>
+            </form>
+            <form action="/refresh" method="get">
+                <div>
+                    <button type="submit" class="btn btn-success ml-2" id="submit-btn">Reload Data</button>
+                </div>
+            </form>
+        </div>
         <p class="error">{{ message }}</p>
         <div class="recent">
             <hr>

@@ -3,6 +3,11 @@
     color: #1ED760;
 }
 
+.buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
 #submit-btn {
     width: 260px;
 }

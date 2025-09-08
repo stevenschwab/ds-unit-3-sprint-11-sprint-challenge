@@ -9,6 +9,9 @@ from flask import Flask, render_template, request, jsonify
 from .air_quality import get_results
 from .models import DB, Record
 
+import warnings
+warnings.filterwarnings("ignore")
+
 
 def get_list_of_tuples():
     response = get_results()
