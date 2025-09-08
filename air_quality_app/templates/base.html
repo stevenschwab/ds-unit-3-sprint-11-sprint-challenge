@@ -24,25 +24,42 @@
             </form>
             <form action="/refresh" method="get">
                 <div>
-                    <button type="submit" class="btn btn-success ml-2" id="submit-btn">Reload Data</button>
+                    <button type="submit" class="btn btn-success ml-2" id="refresh-btn">Reload Data</button>
                 </div>
             </form>
         </div>
         <p class="error">{{ message }}</p>
         <div class="recent">
             <hr>
-            <h2>Records</h2>
+            <h2>Records (Value >= 10)</h2>
             <ul>
                 {% for record in filtered_records %}
                 <li>
                     <div class="recent_search">
-                        <h5>ID: {{record.id}}</h5>
-                        <h5>Datetime_UTC: {{record.datetime_utc}}</h5>
-                        <h5>Value: {{record.value}}</h5>
+                        <h5>ID: {{ record.id }}</h5>
+                        <h5>Location: {{ record.location.name }}</h5>
+                        <h5>Datetime_UTC: {{ record.datetime_utc.isoformat() }}</h5>
+                        <h5>Value: {{ record.value }}</h5>
                     </div>
                 </li>
                 {% endfor %}
             </ul>
+            <hr>
+            <h2>Data Analysis</h2>
+            <h3>Averages by Location</h3>
+            <ul>
+                {% for avg in averages %}
+                <li>Location: {{ avg.name }} - Average Value: {{ avg.avg_value|round(2) }}</li>
+                {% endfor %}
+            </ul>
+            <h3>Trend (Average Value Over Time)</h3>
+            <ul>
+                {% for trend in trends %}
+                <li>Date: {{ trend.date }} - Average Value: {{ trend.avg_value|round(2) }}</li>
+                {% endfor %}
+            </ul>
+            <h3>Prediction for Next Day</h3>
+            <p>{{ prediction|round(2) }}</p>
         </div>
     </div>
 </body>
