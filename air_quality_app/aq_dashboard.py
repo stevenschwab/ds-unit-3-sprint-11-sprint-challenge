@@ -117,20 +117,25 @@ def create_app():
         """Pull fresh data from Open AQ without dropping existing data."""
         try:
             response = get_results()  # Fetch general measurements
-            for m in response['results']:
-                location_name = m.get('location', 'Unknown')
+            for loc in response['results']:
+                location_name = loc.get('name', None)
+                country = loc.get('country', None)
+                country_name = country['name'] if country else 'Unknown'
+                location_id = loc['id']
                 location = Location.query.filter_by(name=location_name).first()
+
                 if not location:
-                    location = Location(name=location_name, country=m.get('country', 'Unknown'))
+                    country = Location(name=location_name, country=country_name, location_id=location_id)
+
                     DB.session.add(location)
                     DB.session.commit()
 
-                datetime_utc = pd.to_datetime(m['datetime']['utc'], format='mixed')
-                if not Record.query.filter_by(location_id=location.id, datetime_utc=datetime_utc).first():
+                datetime_utc = pd.to_datetime(loc['datetimeFirst'], format='mixed')
+                if not Record.query.filter_by(location_id=location_id, datetime_utc=datetime_utc).first():
                     record = Record(
-                        location_id=location.id,
+                        location_id=location_id,
                         datetime_utc=datetime_utc,
-                        value=m['value']
+                        value=loc.get('value', None)
                     )
                     DB.session.add(record)
             DB.session.commit()

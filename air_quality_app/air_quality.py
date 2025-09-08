@@ -9,13 +9,13 @@ curl --request GET \
 
 
 def get_results():
-    BASE_URL = 'https://api.openaq.org/v3/parameters/'
+    BASE_URL = 'https://api.openaq.org/v3/locations/'
 
     headers = {
     'X-API-Key': f'{getenv('OPENAQ_KEY')}'
     }
 
-    query_url = BASE_URL + '2/latest'
+    query_url = BASE_URL + '?limit=10'
 
     # Query the OPENAQ API for the location
     response = requests.get(query_url, headers=headers)

@@ -6,8 +6,10 @@ DB = SQLAlchemy()
 class Location(DB.Model):
     """Model for storing location metadata."""
     id = DB.Column(DB.BigInteger().with_variant(DB.Integer, "sqlite"), primary_key=True)
+    location_id = DB.Column(DB.BigInteger(), nullable=False, unique=True)
     name = DB.Column(DB.String(100), nullable=False, unique=True)
-    country = DB.Column(DB.String(2), nullable=True)  # ISO 2-digit code
+    country = DB.Column(DB.String(100), nullable=True)  # ISO 2-digit code
+    country_id = DB.Column(DB.BigInteger(), nullable=False, unique=True)
     records = DB.relationship('Record', backref='location', lazy=True)
 
     def __repr__(self):
@@ -17,7 +19,7 @@ class Location(DB.Model):
 class Record(DB.Model):
     """Model for storing air quality measurement records."""
     id = DB.Column(DB.BigInteger().with_variant(DB.Integer, "sqlite"), primary_key=True)
-    location_id = DB.Column(DB.BigInteger().with_variant(DB.Integer, "sqlite"), DB.ForeignKey('location.id'), nullable=False)
+    location_id = DB.Column(DB.BigInteger().with_variant(DB.Integer, "sqlite"), DB.ForeignKey('location.location_id'), nullable=False)
     datetime_utc = DB.Column(DB.String, nullable=False)
     value = DB.Column(DB.Float, nullable=False)
 
