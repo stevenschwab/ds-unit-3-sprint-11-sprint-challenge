@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Air Quality in the Cloud</title>
+    <!-- Bootstrap CSS Styles-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- Custom Styles-->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+    <nav class="navbar-expand-lg navbar-dark bg-dark p-2 mb-5">
+        <a class="navbar-brand mb-0 h1" id="title" href="/">Air Quality</a>
+    </nav>
+    <div class="container">
+        <form action="/" method="post">
+            <div class="form-group d-inline-flex">
+                <input type="text" name="location_name" placeholder="Location Name" class="form-control">
+                <button type="submit" class="btn btn-success ml-2" id="submit-btn">Get Data</button>
+            </div>
+        </form>
+        <p class="error">{{ message }}</p>
+        <div class="recent">
+            <hr>
+            <h2>Records</h2>
+            <ul>
+                {% for record in filtered_records %}
+                <li>
+                    <div class="recent_search">
+                        <h5>ID: {{record.id}}</h5>
+                        <h5>Datetime_UTC: {{record.datetime_utc}}</h5>
+                        <h5>Value: {{record.value}}</h5>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</body>
+
+</html>

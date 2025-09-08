@@ -37,11 +37,7 @@ def create_app():
         """Base view."""
         with app.app_context():
             filtered_records = Record.query.filter(Record.value >= 10).all()
-            result = "\n".join(
-                f"Record(id={r.id}, datetime_utc={r.datetime_utc}, value={r.value})"
-                for r in filtered_records
-            )
-            return result
+            return render_template('base.html', filtered_records=filtered_records, message='')
 
     @app.route('/refresh')
     def refresh():
