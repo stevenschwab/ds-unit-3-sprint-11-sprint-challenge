@@ -35,12 +35,16 @@ def create_app():
 
     DB.init_app(app)
 
-    @app.route('/')
+    @app.route('/', methods=['POST', 'GET'])
     def root():
         """Base view."""
-        with app.app_context():
-            filtered_records = Record.query.filter(Record.value >= 10).all()
-            return render_template('base.html', filtered_records=filtered_records, message='')
+        if request.method == "GET":
+            with app.app_context():
+                filtered_records = Record.query.filter(Record.value >= 10).all()
+                return render_template('base.html', filtered_records=filtered_records, message='')
+        elif request.method == "POST":
+            location_name = request.values['location_name']
+            location = 
 
     @app.route('/refresh')
     def refresh():
